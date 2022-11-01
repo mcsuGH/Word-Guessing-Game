@@ -3,11 +3,9 @@ package game;
 import java.util.Random;
 
 public class Game {
-    public static final String[] DICTIONARY = {"MAKERS", "CANDIES", "DEVELOPER", "LONDON"};
     String word;
     Integer attempts = 10;
     public Game() {
-        word = getRandomWordFromDictionary();
     }
 
     public String getWordToGuess() {
@@ -27,8 +25,4 @@ public class Game {
         return attempts;
     }
 
-    public String getRandomWordFromDictionary() {
-        Random rand = new Random();
-        return DICTIONARY[rand.nextInt(DICTIONARY.length)];
-    }
 }
