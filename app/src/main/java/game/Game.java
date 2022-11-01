@@ -25,7 +25,11 @@ public class Game {
     }
 
     public Boolean guessLetter(Character letter) {
-        return true;
+        for (int i = 0; i < word.length(); i++ ) {
+            if (letter == word.charAt(i)) {
+                return true;
+            }
+        }
+        return false;
     }
-
 }
