@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import java.util.ArrayList;
 
 public class GameTest {
     @Test public void testGetsWordToGuess() {
@@ -52,6 +53,27 @@ public class GameTest {
 
         Game game = new Game(mockChoser);
         game.guessLetter('T');
+
         assertEquals("Wrong guess removes 1 attempt", Integer.valueOf(9), game.getRemainingAttempts());
+    }
+
+    @Test public void testInitialGuessedLetters() {
+        WordChoser mockChoser = mock(WordChoser.class);
+        when(mockChoser.getRandomWordFromDictionary()).thenReturn("MAKERS");
+        ArrayList<Character> mockList = new ArrayList<Character>();
+
+        Game game = new Game(mockChoser);
+        assertEquals("Successful guess adds letter to guessed letters", mockList, game.getGuessedLetters());
+    }
+
+    @Test public void testGuessedLetters() {
+        WordChoser mockChoser = mock(WordChoser.class);
+        when(mockChoser.getRandomWordFromDictionary()).thenReturn("MAKERS");
+        ArrayList<Character> mockList = new ArrayList<Character>();
+        mockList.add('K');
+
+        Game game = new Game(mockChoser);
+        game.guessLetter('K');
+        assertEquals("Successful guess adds letter to guessed letters", mockList, game.getGuessedLetters());
     }
 }

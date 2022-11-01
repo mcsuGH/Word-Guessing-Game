@@ -29,10 +29,15 @@ public class Game {
 
     public Boolean guessLetter(Character letter) {
         if (word.indexOf(letter) != -1) {
+            guessedLetters.add(letter);
             return true;
         } else {
             attempts -= 1;
             return false;
         }
+    }
+
+    public ArrayList getGuessedLetters() {
+        return guessedLetters;
     }
 }
