@@ -1,11 +1,10 @@
 package game;
 
-import java.util.Random;
-
 public class Game {
     String word;
     Integer attempts = 10;
-    public Game() {
+    public Game(WordChoser choser) {
+        word = choser.getRandomWordFromDictionary();
     }
 
     public String getWordToGuess() {
