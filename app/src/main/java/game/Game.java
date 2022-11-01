@@ -1,17 +1,21 @@
 package game;
 
+import java.util.Random;
+
 public class Game {
     private String word;
     private Integer remainingAttempts;
-    public Game(String word) {
-        this.word = word;
-        this.remainingAttempts = 10;
+    public Game() {
+        word = getRandomWordFromDictionary();
+        remainingAttempts = 10;
     }
+
+    public static final String[] DICTIONARY = {"MAKERS", "CANDIES", "DEVELOPER", "LONDON"};
 
     public String getWordToGuess() {
         StringBuilder hiddenWord = new StringBuilder();
-        for (Integer i = 0; i < this.word.length(); i++ ) {
-            Character currentLetter = this.word.charAt(i);
+        for (int i = 0; i < word.length(); i++ ) {
+            Character currentLetter = word.charAt(i);
             if (i == 0) {
                 hiddenWord.append(currentLetter);
             } else {
@@ -22,6 +26,11 @@ public class Game {
     }
 
     public Integer getRemainingAttempts() {
-        return this.remainingAttempts;
+        return remainingAttempts;
+    }
+
+    public String getRandomWordFromDictionary() {
+        Random rand = new Random();
+        return DICTIONARY[rand.nextInt(3)];
     }
 }
