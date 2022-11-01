@@ -2,8 +2,10 @@ package game;
 
 public class Game {
     private String word;
+    private Integer remainingAttempts;
     public Game(String word) {
         this.word = word;
+        this.remainingAttempts = 10;
     }
 
     public String getWordToGuess() {
@@ -17,5 +19,9 @@ public class Game {
             }
         }
         return hiddenWord.toString();
+    }
+
+    public Integer getRemainingAttempts() {
+        return this.remainingAttempts;
     }
 }
