@@ -3,14 +3,12 @@ package game;
 import java.util.Random;
 
 public class Game {
-    private String word;
-    private Integer remainingAttempts;
+    public static final String[] DICTIONARY = {"MAKERS", "CANDIES", "DEVELOPER", "LONDON"};
+    String word;
+    Integer attempts = 10;
     public Game() {
         word = getRandomWordFromDictionary();
-        remainingAttempts = 10;
     }
-
-    public static final String[] DICTIONARY = {"MAKERS", "CANDIES", "DEVELOPER", "LONDON"};
 
     public String getWordToGuess() {
         StringBuilder hiddenWord = new StringBuilder();
@@ -26,7 +24,7 @@ public class Game {
     }
 
     public Integer getRemainingAttempts() {
-        return remainingAttempts;
+        return attempts;
     }
 
     public String getRandomWordFromDictionary() {
