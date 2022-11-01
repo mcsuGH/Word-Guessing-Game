@@ -24,4 +24,8 @@ public class Game {
         return attempts;
     }
 
+    public Boolean guessLetter(Character letter) {
+        return true;
+    }
+
 }

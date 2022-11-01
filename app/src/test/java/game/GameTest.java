@@ -29,4 +29,12 @@ public class GameTest {
         Game game = new Game(mockChoser);
         assertEquals("Game initialises with 10 remaining attempts", Integer.valueOf(10), game.getRemainingAttempts());
     }
+
+    @Test public void testGuessLetter() {
+        WordChoser mockChoser = mock(WordChoser.class);
+        when(mockChoser.getRandomWordFromDictionary()).thenReturn("MAKERS");
+
+        Game game = new Game(mockChoser);
+        assertTrue("Word contains letter 'A'", game.guessLetter('A'));
+    }
 }
