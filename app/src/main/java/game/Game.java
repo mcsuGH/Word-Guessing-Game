@@ -1,8 +1,11 @@
 package game;
 
+import java.util.ArrayList;
+
 public class Game {
-    String word;
-    Integer attempts = 10;
+    private String word;
+    private Integer attempts = 10;
+    private ArrayList<Character> guessedLetters = new ArrayList<Character>();
     public Game(WordChoser choser) {
         word = choser.getRandomWordFromDictionary();
     }
@@ -25,11 +28,11 @@ public class Game {
     }
 
     public Boolean guessLetter(Character letter) {
-        for (int i = 0; i < word.length(); i++ ) {
-            if (letter == word.charAt(i)) {
-                return true;
-            }
+        if (word.indexOf(letter) != -1) {
+            return true;
+        } else {
+            attempts -= 1;
+            return false;
         }
-        return false;
     }
 }

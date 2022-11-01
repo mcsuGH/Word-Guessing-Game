@@ -45,4 +45,13 @@ public class GameTest {
         Game game = new Game(mockChoser);
         assertFalse("Makers does not contain letter 'T'", game.guessLetter('T'));
     }
+
+    @Test public void testReduceRemainingAttempts() {
+        WordChoser mockChoser = mock(WordChoser.class);
+        when(mockChoser.getRandomWordFromDictionary()).thenReturn("MAKERS");
+
+        Game game = new Game(mockChoser);
+        game.guessLetter('T');
+        assertEquals("Wrong guess removes 1 attempt", Integer.valueOf(9), game.getRemainingAttempts());
+    }
 }
