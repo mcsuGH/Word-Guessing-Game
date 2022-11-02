@@ -16,7 +16,12 @@ public class App {
             System.out.println(game.getWordToGuess());
             System.out.printf("Enter one letter to guess (%d attempts remaining):", game.getRemainingAttempts());
             Character guessedLetter = userInput.nextLine().charAt(0);
-            game.guessLetter(guessedLetter);
+            Boolean result = game.guessLetter(guessedLetter);
+            if (result) {
+                System.out.println("Right!");
+            } else {
+                System.out.println("Wrong...");
+            }
         }
     }
 }
