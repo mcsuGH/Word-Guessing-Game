@@ -22,7 +22,7 @@ public class App {
             } else {
                 System.out.println("Wrong...");
             }
-        } while (game.getRemainingAttempts() > 0);
+        } while (game.isGameLost() == false && game.isGameWon() == false);
     }
 }
 

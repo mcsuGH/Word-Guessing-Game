@@ -61,7 +61,7 @@ public class Game {
     }
 
     public Boolean isGameWon() {
-        if (word.equals(guessedWord)) {
+        if (guessedWord.equals(word)) {
             return true;
         } else {
             return false;
