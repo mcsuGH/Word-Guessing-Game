@@ -7,31 +7,20 @@ public class Game {
     private String guessedWord;
     private Integer attempts = 10;
     private ArrayList<Character> guessedLetters = new ArrayList<Character>();
-    public Game(WordChoser choser) {
-        word = choser.getRandomWordFromDictionary();
-        encryptWord();
-    }
 
-    public void encryptWord() {
-        StringBuilder hiddenWord = new StringBuilder();
-        for (int i = 0; i < word.length(); i++ ) {
-            Character currentLetter = word.charAt(i);
-            if (i == 0) {
-                hiddenWord.append(currentLetter);
-            } else {
-                if (guessedLetters.indexOf(currentLetter) != -1) {
-                    hiddenWord.append(currentLetter);
-                } else {
-                    hiddenWord.append("_");
-                }
-            }
-        }
-        guessedWord = hiddenWord.toString();
+    private Masker encryptor;
+
+    public Game(WordChoser choser, Masker masker) {
+        word = choser.getRandomWordFromDictionary();
+        encryptor = masker;
+        guessedWord = encryptor.getsMaskedWord(word, guessedLetters);
     }
 
     public String getWordToGuess() {
         return guessedWord;
     }
+
+    public void updateGuessedWord() {guessedWord = encryptor.getsMaskedWord(word, getGuessedLetters());}
 
     public Integer getRemainingAttempts() {
         return attempts;
@@ -40,7 +29,7 @@ public class Game {
     public Boolean guessLetter(Character letter) {
         if (word.indexOf(letter) != -1) {
             guessedLetters.add(letter);
-            encryptWord();
+            updateGuessedWord();
             return true;
         } else {
             attempts -= 1;
