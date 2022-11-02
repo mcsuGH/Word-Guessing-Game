@@ -25,3 +25,22 @@ public class App {
         }
     }
 }
+
+//        Game game = new Game(choser);
+//        System.out.println("Welcome! Today the word to guess is:");
+//
+//        do {
+//            System.out.println(game.getWordToGuess());
+//
+//            System.out.println("Enter one letter to guess:");
+//
+//            Scanner scanner = new Scanner(System.in);
+//            Character guess = scanner.nextLine().charAt(0);
+//            Boolean result = game.guessLetter(guess);
+//
+//            if (result) {
+//                System.out.println("Right!");
+//            } else {
+//                System.out.println("Wrong...");
+//            }
+//        } while (game.getRemainingAttempts() >= 1);
