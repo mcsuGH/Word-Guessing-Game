@@ -12,7 +12,7 @@ public class App {
         Scanner userInput = new Scanner(System.in);
 
         System.out.println("Welcome! Today the word to guess is:");
-        while (game.getRemainingAttempts() > 0) {
+        do {
             System.out.println(game.getWordToGuess());
             System.out.printf("Enter one letter to guess (%d attempts remaining):", game.getRemainingAttempts());
             Character guessedLetter = userInput.nextLine().charAt(0);
@@ -22,7 +22,7 @@ public class App {
             } else {
                 System.out.println("Wrong...");
             }
-        }
+        } while (game.getRemainingAttempts() > 0);
     }
 }
 
