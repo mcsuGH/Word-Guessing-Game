@@ -3,12 +3,20 @@
  */
 package game;
 
-public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
+import java.util.Scanner;
 
+public class App {
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        WordChoser choser = new WordChoser();
+        Game game = new Game(choser);
+        Scanner userInput = new Scanner(System.in);
+
+        System.out.println("Welcome! Today the word to guess is:");
+        while (game.getRemainingAttempts() > 0) {
+            System.out.println(game.getWordToGuess());
+            System.out.printf("Enter one letter to guess (%d attempts remaining):", game.getRemainingAttempts());
+            Character guessedLetter = userInput.nextLine().charAt(0);
+            game.guessLetter(guessedLetter);
+        }
     }
 }
