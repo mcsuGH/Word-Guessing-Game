@@ -49,7 +49,7 @@ public class GameTest {
         WordChoser mockChoser = mock(WordChoser.class);
         when(mockChoser.getRandomWordFromDictionary()).thenReturn("MAKERS");
         Masker mockMasker = mock(Masker.class);
-        ArrayList<Character> mockList = new ArrayList<Character>();
+        ArrayList<Character> mockList = new ArrayList<>();
 
         Game game = new Game(mockChoser, mockMasker);
         assertEquals("Guessed letters initially is empty", mockList, game.getGuessedLetters());
@@ -59,7 +59,7 @@ public class GameTest {
         WordChoser mockChoser = mock(WordChoser.class);
         when(mockChoser.getRandomWordFromDictionary()).thenReturn("MAKERS");
         Masker mockMasker = mock(Masker.class);
-        ArrayList<Character> mockList = new ArrayList<Character>();
+        ArrayList<Character> mockList = new ArrayList<>();
         mockList.add('K');
 
         Game game = new Game(mockChoser, mockMasker);
