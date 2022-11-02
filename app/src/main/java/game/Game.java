@@ -44,4 +44,12 @@ public class Game {
     public ArrayList getGuessedLetters() {
         return guessedLetters;
     }
+
+    public Boolean isGameLost() {
+        if (getRemainingAttempts() > 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

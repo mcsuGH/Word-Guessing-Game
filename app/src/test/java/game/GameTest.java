@@ -77,4 +77,15 @@ public class GameTest {
         game.guessLetter('K');
         assertEquals("Successful guess adds letter to guessed letters", mockList, game.getGuessedLetters());
     }
+
+    @Test public void testIsGameLost() {
+        WordChoser mockChoser = mock(WordChoser.class);
+        when(mockChoser.getRandomWordFromDictionary()).thenReturn("MAKERS");
+
+        Game game = new Game(mockChoser);
+        do {
+            game.guessLetter('Z');
+        } while (game.getRemainingAttempts() > 0);
+        assertTrue("Game is lost after losing all remaining attempts", game.isGameLost());
+    }
 }
