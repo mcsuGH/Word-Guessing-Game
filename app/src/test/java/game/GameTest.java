@@ -20,7 +20,8 @@ public class GameTest {
         when(mockChoser.getRandomWordFromDictionary()).thenReturn("DEVELOPER");
 
         Game game = new Game(mockChoser);
-        assertEquals("Game initialises with random word", "D________", game.getWordToGuess());
+        game.guessLetter('E');
+        assertEquals("Game initialises with random word", "DE_E___E_", game.getWordToGuess());
     }
 
     @Test public void testGetsInitialRemainingAttempts() {
@@ -61,15 +62,17 @@ public class GameTest {
         WordChoser mockChoser = mock(WordChoser.class);
         when(mockChoser.getRandomWordFromDictionary()).thenReturn("MAKERS");
         ArrayList<Character> mockList = new ArrayList<Character>();
+        mockList.add('M');
 
         Game game = new Game(mockChoser);
-        assertEquals("Successful guess adds letter to guessed letters", mockList, game.getGuessedLetters());
+        assertEquals("Guessed letters initially contains first letter", mockList, game.getGuessedLetters());
     }
 
     @Test public void testGuessedLetters() {
         WordChoser mockChoser = mock(WordChoser.class);
         when(mockChoser.getRandomWordFromDictionary()).thenReturn("MAKERS");
         ArrayList<Character> mockList = new ArrayList<Character>();
+        mockList.add('M');
         mockList.add('K');
 
         Game game = new Game(mockChoser);
