@@ -13,7 +13,7 @@ public class Game {
     public Game(WordChoser choser, Masker masker) {
         word = choser.getRandomWordFromDictionary();
         encryptor = masker;
-        guessedWord = encryptor.getsMaskedWord(word, guessedLetters);
+        guessedWord = encryptor.getsMaskedWord(word, getGuessedLetters());
     }
 
     public String getWordToGuess() {
