@@ -101,4 +101,15 @@ public class GameTest {
         game.guessLetter('S');
         assertTrue("Game is won after guessing all letters correctly", game.isGameWon());
     }
+
+    @Test public void testIsGameWon2() {
+        WordChoser mockChoser = mock(WordChoser.class);
+        when(mockChoser.getRandomWordFromDictionary()).thenReturn("LONDON");
+
+        Game game = new Game(mockChoser);
+        game.guessLetter('O');
+        game.guessLetter('N');
+        game.guessLetter('D');
+        assertTrue("Game is won after guessing all letters correctly", game.isGameWon());
+    }
 }
