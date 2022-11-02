@@ -8,17 +8,20 @@ public class Game {
     private ArrayList<Character> guessedLetters = new ArrayList<Character>();
     public Game(WordChoser choser) {
         word = choser.getRandomWordFromDictionary();
-        guessedLetters.add(word.charAt(0));
     }
 
     public String getWordToGuess() {
         StringBuilder hiddenWord = new StringBuilder();
         for (int i = 0; i < word.length(); i++ ) {
             Character currentLetter = word.charAt(i);
-            if (guessedLetters.contains(currentLetter)) {
+            if (i == 0) {
                 hiddenWord.append(currentLetter);
             } else {
-                hiddenWord.append("_");
+                if (guessedLetters.indexOf(currentLetter) != -1) {
+                    hiddenWord.append(currentLetter);
+                } else {
+                    hiddenWord.append("_");
+                }
             }
         }
         return hiddenWord.toString();

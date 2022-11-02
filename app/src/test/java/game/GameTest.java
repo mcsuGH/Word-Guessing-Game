@@ -62,17 +62,15 @@ public class GameTest {
         WordChoser mockChoser = mock(WordChoser.class);
         when(mockChoser.getRandomWordFromDictionary()).thenReturn("MAKERS");
         ArrayList<Character> mockList = new ArrayList<Character>();
-        mockList.add('M');
 
         Game game = new Game(mockChoser);
-        assertEquals("Guessed letters initially contains first letter", mockList, game.getGuessedLetters());
+        assertEquals("Guessed letters initially is empty", mockList, game.getGuessedLetters());
     }
 
     @Test public void testGuessedLetters() {
         WordChoser mockChoser = mock(WordChoser.class);
         when(mockChoser.getRandomWordFromDictionary()).thenReturn("MAKERS");
         ArrayList<Character> mockList = new ArrayList<Character>();
-        mockList.add('M');
         mockList.add('K');
 
         Game game = new Game(mockChoser);
