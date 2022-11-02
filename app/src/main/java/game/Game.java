@@ -4,13 +4,15 @@ import java.util.ArrayList;
 
 public class Game {
     private String word;
+    private String guessedWord;
     private Integer attempts = 10;
     private ArrayList<Character> guessedLetters = new ArrayList<Character>();
     public Game(WordChoser choser) {
         word = choser.getRandomWordFromDictionary();
+        encryptWord();
     }
 
-    public String getWordToGuess() {
+    public void encryptWord() {
         StringBuilder hiddenWord = new StringBuilder();
         for (int i = 0; i < word.length(); i++ ) {
             Character currentLetter = word.charAt(i);
@@ -24,7 +26,11 @@ public class Game {
                 }
             }
         }
-        return hiddenWord.toString();
+        guessedWord = hiddenWord.toString();
+    }
+
+    public String getWordToGuess() {
+        return guessedWord;
     }
 
     public Integer getRemainingAttempts() {
@@ -34,6 +40,7 @@ public class Game {
     public Boolean guessLetter(Character letter) {
         if (word.indexOf(letter) != -1) {
             guessedLetters.add(letter);
+            encryptWord();
             return true;
         } else {
             attempts -= 1;
@@ -50,6 +57,14 @@ public class Game {
             return false;
         } else {
             return true;
+        }
+    }
+
+    public Boolean isGameWon() {
+        if (word.equals(guessedWord)) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

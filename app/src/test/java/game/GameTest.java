@@ -88,4 +88,17 @@ public class GameTest {
         } while (game.getRemainingAttempts() > 0);
         assertTrue("Game is lost after losing all remaining attempts", game.isGameLost());
     }
+
+    @Test public void testIsGameWon() {
+        WordChoser mockChoser = mock(WordChoser.class);
+        when(mockChoser.getRandomWordFromDictionary()).thenReturn("MAKERS");
+
+        Game game = new Game(mockChoser);
+        game.guessLetter('A');
+        game.guessLetter('K');
+        game.guessLetter('E');
+        game.guessLetter('R');
+        game.guessLetter('S');
+        assertTrue("Game is won after guessing all letters correctly", game.isGameWon());
+    }
 }
