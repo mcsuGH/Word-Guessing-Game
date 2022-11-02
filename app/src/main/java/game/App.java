@@ -23,6 +23,12 @@ public class App {
                 System.out.println("Wrong...");
             }
         } while (game.isGameLost() == false && game.isGameWon() == false);
+        if (game.isGameWon() == true) {
+            System.out.printf("You guessed it right! The word was %s.", game.getWordToGuess());
+        }
+        if (game.isGameLost() == true) {
+            System.out.printf("You have ran out of attempts!");
+        }
     }
 }
 
