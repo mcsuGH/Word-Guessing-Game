@@ -25,19 +25,7 @@ public class App {
         Integer playerTurn = turn % numberOfPlayers;
         ArrayList<Game> games = new ArrayList<Game>();
 
-        for (int i = 0; i < numberOfPlayers; i++) {
-            games.add(new Game(choser, masker));
-        }
-
-        for (int i = 0; i < numberOfPlayers; i++) {
-            System.out.printf("Enter name for Player %d: ", i + 1);
-            games.get(i).setName(userInput.nextLine());
-        }
-
-        System.out.println("Welcome! Today the word to guess is:");
-        for (Game game : games) {
-            System.out.printf("%s: %s \n", game.getName(), game.getWordToGuess());
-        };
+        gameSetup(games, numberOfPlayers, choser, masker, userInput);
 
         while (!isGameOver(games)) {
             if (!games.get(playerTurn).isGameLost()) {
@@ -66,6 +54,22 @@ public class App {
         }
     }
 
+    public static void gameSetup(ArrayList<Game> games, Integer numberOfPlayers, WordChoser choser, Masker masker, Scanner userInput) {
+        for (int i = 0; i < numberOfPlayers; i++) {
+            games.add(new Game(choser, masker));
+        }
+
+        for (int i = 0; i < numberOfPlayers; i++) {
+            System.out.printf("Enter name for Player %d: ", i + 1);
+            games.get(i).setName(userInput.nextLine());
+        }
+
+        System.out.println("Welcome! Today the word to guess is:");
+        for (Game game : games) {
+            System.out.printf("%s: %s \n", game.getName(), game.getWordToGuess());
+        };
+    }
+
     public static Boolean isGameOver(ArrayList<Game> games) {
         if (games.stream().anyMatch(game -> game.isGameWon())) {
             return true;
@@ -76,27 +80,3 @@ public class App {
         return false;
     }
 }
-
-
-//    public static void singlePlayer(WordChoser choser, Masker masker, Scanner userInput) {
-//        Game game = new Game(choser, masker);
-//
-//        System.out.println("Welcome! Today the word to guess is:");
-//        do {
-//            System.out.println(game.getWordToGuess());
-//            System.out.printf("Enter one letter to guess (%d attempts remaining):", game.getRemainingAttempts());
-//            Character guessedLetter = userInput.nextLine().charAt(0);
-//            Boolean result = game.guessLetter(guessedLetter);
-//            if (result) {
-//                System.out.println("Right!");
-//            } else {
-//                System.out.println("Wrong...");
-//            }
-//        } while (!game.isGameLost() && !game.isGameWon());
-//        if (game.isGameWon()) {
-//            System.out.printf("You guessed it right! The word was %s.", game.getWordToGuess());
-//        }
-//        if (game.isGameLost()) {
-//            System.out.println("You have ran out of attempts!");
-//        }
-//    }
