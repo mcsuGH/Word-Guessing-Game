@@ -4,6 +4,7 @@
 package game;
 
 import java.util.Scanner;
+import java.util.Random;
 
 public class App {
     public static void main(String[] args) {
@@ -41,11 +42,29 @@ public class App {
         Masker encryptor = new Masker();
         Game player1 = new Game(choser, encryptor);
         Game player2 = new Game(choser, encryptor);
+        Game[] game = {player1, player2};
         Scanner userInput = new Scanner(System.in);
+        Random rand = new Random();
+        Integer turn = rand.nextInt(2);
+        Integer playerTurn = turn % 2;
 
         System.out.println("Welcome! Today the word to guess is:");
         System.out.printf("Player 1: %s \n", player1.getWordToGuess());
         System.out.printf("Player 2: %s \n", player2.getWordToGuess());
+
+        while (!game[playerTurn].isGameLost() && !game[playerTurn].isGameWon()) {
+            System.out.printf("\nPlayer %d: Enter one letter to guess: (%d attempts remaining): \n", playerTurn + 1, game[playerTurn].getRemainingAttempts());
+            Character guessedLetter = userInput.nextLine().charAt(0);
+            Boolean result = game[playerTurn].guessLetter(guessedLetter);
+            if (result) {
+                System.out.println("Right!");
+            } else {
+                System.out.println("Wrong...");
+            }
+            System.out.printf("Player %d: %s \n", playerTurn + 1, game[playerTurn].getWordToGuess());
+            turn += 1;
+            playerTurn = turn % 2;
+        }
     }
 }
 
