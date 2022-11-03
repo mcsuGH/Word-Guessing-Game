@@ -60,25 +60,28 @@ public class App {
         };
 
         while (!isGameOver(games)) {
-            System.out.printf("\n%s: Enter one letter to guess: (%d attempts remaining): \n", games.get(playerTurn).getName(), games.get(playerTurn).getRemainingAttempts());
-            Character guessedLetter = userInput.nextLine().charAt(0);
-            Boolean result = games.get(playerTurn).guessLetter(guessedLetter);
-            if (result) {
-                System.out.println("Right!");
-            } else {
-                System.out.println("Wrong...");
+            if (!games.get(playerTurn).isGameLost()) {
+                System.out.printf("\n%s: Enter one letter to guess: (%d attempts remaining): \n", games.get(playerTurn).getName(), games.get(playerTurn).getRemainingAttempts());
+                Character guessedLetter = userInput.nextLine().charAt(0);
+                Boolean result = games.get(playerTurn).guessLetter(guessedLetter);
+                if (result) {
+                    System.out.println("Right!");
+                } else {
+                    System.out.println("Wrong...");
+                }
+                System.out.printf("%s: %s \n", games.get(playerTurn).getName(), games.get(playerTurn).getWordToGuess());
             }
-            System.out.printf("%s: %s \n", games.get(playerTurn).getName(), games.get(playerTurn).getWordToGuess());
             turn += 1;
             playerTurn = turn % 2;
         }
     }
 
     public static Boolean isGameOver(ArrayList<Game> games) {
-        for (Game game : games) {
-            if (game.isGameWon() || game.isGameLost()) {
-                return true;
-            }
+        if (games.stream().anyMatch(game -> game.isGameWon())) {
+            return true;
+        }
+        if (games.stream().allMatch(game -> game.isGameLost())) {
+            return true;
         }
         return false;
     }
