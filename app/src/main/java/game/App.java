@@ -52,7 +52,7 @@ public class App {
         System.out.printf("Player 1: %s \n", player1.getWordToGuess());
         System.out.printf("Player 2: %s \n", player2.getWordToGuess());
 
-        while (!game[playerTurn].isGameLost() && !game[playerTurn].isGameWon()) {
+        while (!isGameOver(game)) {
             System.out.printf("\nPlayer %d: Enter one letter to guess: (%d attempts remaining): \n", playerTurn + 1, game[playerTurn].getRemainingAttempts());
             Character guessedLetter = userInput.nextLine().charAt(0);
             Boolean result = game[playerTurn].guessLetter(guessedLetter);
@@ -65,6 +65,15 @@ public class App {
             turn += 1;
             playerTurn = turn % 2;
         }
+    }
+
+    public static Boolean isGameOver(Game[] games) {
+        for (Game game : games) {
+            if (game.isGameWon() || game.isGameLost()) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 
