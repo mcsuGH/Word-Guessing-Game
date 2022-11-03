@@ -74,6 +74,16 @@ public class App {
             turn += 1;
             playerTurn = turn % 2;
         }
+        if (isGameOver(games)) {
+            if (games.stream().anyMatch(game -> game.isGameWon())) {
+                System.out.printf("Congratulations %s! Your word was %s.",
+                        games.stream().filter(game -> game.isGameWon()).findFirst().get().getName(),
+                        games.stream().filter(game -> game.isGameWon()).findFirst().get().getWordToGuess()
+                );
+            } else {
+                System.out.println("Everybody has used up their attempts!");
+            }
+        }
     }
 
     public static Boolean isGameOver(ArrayList<Game> games) {
