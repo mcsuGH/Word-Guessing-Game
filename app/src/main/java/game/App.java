@@ -54,21 +54,22 @@ public class App {
 
     public static void playGame(ArrayList<Game> games, Scanner userInput, Integer initialTurn, Integer numberOfPlayers) {
         Integer turn = initialTurn;
-        Integer playerTurn = initialTurn % numberOfPlayers;
+
         while (!isGameOver(games)) {
-            if (!games.get(playerTurn).isGameLost()) {
-                System.out.printf("\n%s: Enter one letter to guess: (%d attempts remaining): \n", games.get(playerTurn).getName(), games.get(playerTurn).getRemainingAttempts());
+            Integer playerTurn = turn % numberOfPlayers;
+            Game currentPlayer = games.get(playerTurn);
+            if (!currentPlayer.isGameLost()) {
+                System.out.printf("\n%s: Enter one letter to guess: (%d attempts remaining): \n", currentPlayer.getName(), currentPlayer.getRemainingAttempts());
                 Character guessedLetter = userInput.nextLine().charAt(0);
-                Boolean result = games.get(playerTurn).guessLetter(guessedLetter);
+                Boolean result = currentPlayer.guessLetter(guessedLetter);
                 if (result) {
                     System.out.println("Right!");
                 } else {
                     System.out.println("Wrong...");
                 }
-                System.out.printf("%s: %s \n", games.get(playerTurn).getName(), games.get(playerTurn).getWordToGuess());
+                System.out.printf("%s: %s \n", currentPlayer.getName(), currentPlayer.getWordToGuess());
             }
             turn += 1;
-            playerTurn = turn % numberOfPlayers;
         }
     }
 
