@@ -24,7 +24,7 @@ public class App {
         Integer initialTurn = rand.nextInt(numberOfPlayers);
         ArrayList<Game> games = new ArrayList<Game>();
 
-        gameSetup(games, numberOfPlayers, choser, masker, userInput);
+        setupGames(games, numberOfPlayers, choser, masker, userInput);
         playGame(games, userInput, initialTurn, numberOfPlayers);
 
         if (isGameOver(games)) {
@@ -39,7 +39,7 @@ public class App {
         }
     }
 
-    public static void gameSetup(ArrayList<Game> games, Integer numberOfPlayers, WordChoser choser, Masker masker, Scanner userInput) {
+    public static void setupGames(ArrayList<Game> games, Integer numberOfPlayers, WordChoser choser, Masker masker, Scanner userInput) {
         for (int i = 0; i < numberOfPlayers; i++) {
             games.add(new Game(choser, masker));
             System.out.printf("Enter name for Player %d: ", i + 1);
