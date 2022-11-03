@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class Game {
     private String word;
     private String guessedWord;
+
+    private String playerName = "";
     private Integer attempts = 10;
     private ArrayList<Character> guessedLetters = new ArrayList<Character>();
 
@@ -37,23 +39,23 @@ public class Game {
         }
     }
 
-    public ArrayList getGuessedLetters() {
+    public ArrayList<Character> getGuessedLetters() {
         return guessedLetters;
     }
 
     public Boolean isGameLost() {
-        if (getRemainingAttempts() > 0) {
-            return false;
-        } else {
-            return true;
-        }
+        return getRemainingAttempts() > 0 ? false : true;
     }
 
     public Boolean isGameWon() {
-        if (guessedWord.equals(word)) {
-            return true;
-        } else {
-            return false;
-        }
+        return guessedWord.equals(word) ? true : false;
+    }
+
+    public String getName() {
+        return playerName;
+    }
+
+    public void setName(String name) {
+        playerName = name;
     }
 }

@@ -110,4 +110,23 @@ public class GameTest {
 
         assertTrue("Game is won after guessing all letters correctly", game.isGameWon());
     }
+
+    @Test public void testEmptyName() {
+        WordChoser mockChoser = mock(WordChoser.class);
+        Masker mockMasker = mock(Masker.class);
+        Game game = new Game(mockChoser, mockMasker);
+
+        assertEquals("Name should be empty", String.valueOf(""), game.getName());
+
+    }
+
+    @Test public void testSetName() {
+        WordChoser mockChoser = mock(WordChoser.class);
+        Masker mockMasker = mock(Masker.class);
+        Game game = new Game(mockChoser, mockMasker);
+        game.setName("Dev");
+
+        assertEquals("Name can be set", String.valueOf("Dev"), game.getName());
+
+    }
 }
