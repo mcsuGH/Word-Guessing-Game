@@ -26,17 +26,7 @@ public class App {
 
         setupGames(games, numberOfPlayers, choser, masker, userInput);
         playGame(games, userInput, initialTurn, numberOfPlayers);
-
-        if (isGameOver(games)) {
-            if (games.stream().anyMatch(game -> game.isGameWon())) {
-                System.out.printf("Congratulations %s! Your word was %s.",
-                        games.stream().filter(game -> game.isGameWon()).findFirst().get().getName(),
-                        games.stream().filter(game -> game.isGameWon()).findFirst().get().getWordToGuess()
-                );
-            } else {
-                System.out.println("Everybody has used up their attempts!");
-            }
-        }
+        endGame(games);
     }
 
     public static void setupGames(ArrayList<Game> games, Integer numberOfPlayers, WordChoser choser, Masker masker, Scanner userInput) {
@@ -79,6 +69,17 @@ public class App {
             }
             turn += 1;
             playerTurn = turn % numberOfPlayers;
+        }
+    }
+
+    public static void endGame(ArrayList<Game> games) {
+        if (isGameOver(games)) {
+            if (games.stream().anyMatch(game -> game.isGameWon())) {
+                Game winner = games.stream().filter(game -> game.isGameWon()).findAny().get();
+                System.out.printf("Congratulations %s! Your word was %s.", winner.getName(), winner.getWordToGuess());
+            } else {
+                System.out.println("Everybody has used up their attempts!");
+            }
         }
     }
 }
