@@ -43,32 +43,32 @@ public class App {
     public static void multiPlayer(WordChoser choser, Masker masker, Scanner userInput, Random rand, Integer numberOfPlayers) {
         Integer turn = rand.nextInt(numberOfPlayers);
         Integer playerTurn = turn % numberOfPlayers;
-        ArrayList<Game> game = new ArrayList<Game>();
+        ArrayList<Game> games = new ArrayList<Game>();
 
         for (int i = 0; i < numberOfPlayers; i++) {
-            game.add(new Game(choser, masker));
+            games.add(new Game(choser, masker));
         }
 
         for (int i = 0; i < numberOfPlayers; i++) {
-            System.out.printf("Enter name for Player %d:", i + 1);
-            game.get(i).setName(userInput.nextLine());
+            System.out.printf("Enter name for Player %d: ", i + 1);
+            games.get(i).setName(userInput.nextLine());
         }
 
         System.out.println("Welcome! Today the word to guess is:");
-        for (int i = 0; i < numberOfPlayers; i++) {
-            System.out.printf("%s: %s \n", game.get(i).getName(), game.get(i).getWordToGuess());
-        }
+        for (Game game : games) {
+            System.out.printf("%s: %s \n", game.getName(), game.getWordToGuess());
+        };
 
-        while (!isGameOver(game)) {
-            System.out.printf("\n%s: Enter one letter to guess: (%d attempts remaining): \n", game.get(playerTurn).getName(), game.get(playerTurn).getRemainingAttempts());
+        while (!isGameOver(games)) {
+            System.out.printf("\n%s: Enter one letter to guess: (%d attempts remaining): \n", games.get(playerTurn).getName(), games.get(playerTurn).getRemainingAttempts());
             Character guessedLetter = userInput.nextLine().charAt(0);
-            Boolean result = game.get(playerTurn).guessLetter(guessedLetter);
+            Boolean result = games.get(playerTurn).guessLetter(guessedLetter);
             if (result) {
                 System.out.println("Right!");
             } else {
                 System.out.println("Wrong...");
             }
-            System.out.printf("%s: %s \n", game.get(playerTurn).getName(), game.get(playerTurn).getWordToGuess());
+            System.out.printf("%s: %s \n", games.get(playerTurn).getName(), games.get(playerTurn).getWordToGuess());
             turn += 1;
             playerTurn = turn % 2;
         }
