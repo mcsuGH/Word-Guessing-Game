@@ -14,7 +14,7 @@ public class App {
         Random rand = new Random();
         Scanner userInput = new Scanner(System.in);
 
-        multiPlayer(choser, encryptor, userInput, rand, 2);
+        multiPlayer(choser, encryptor, userInput, rand, 3);
     }
 
     public static void singlePlayer(WordChoser choser, Masker masker, Scanner userInput) {
@@ -72,7 +72,7 @@ public class App {
                 System.out.printf("%s: %s \n", games.get(playerTurn).getName(), games.get(playerTurn).getWordToGuess());
             }
             turn += 1;
-            playerTurn = turn % 2;
+            playerTurn = turn % numberOfPlayers;
         }
         if (isGameOver(games)) {
             if (games.stream().anyMatch(game -> game.isGameWon())) {
