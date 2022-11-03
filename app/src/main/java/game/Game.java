@@ -12,10 +12,11 @@ public class Game {
 
     private Masker encryptor;
 
-    public Game(WordChoser choser, Masker masker) {
+    public Game(WordChoser choser, Masker masker, String name) {
         word = choser.getRandomWordFromDictionary();
         encryptor = masker;
         guessedWord = encryptor.getsMaskedWord(word, getGuessedLetters());
+        playerName = name;
     }
 
     public String getWordToGuess() {
@@ -53,9 +54,5 @@ public class Game {
 
     public String getName() {
         return playerName;
-    }
-
-    public void setName(String name) {
-        playerName = name;
     }
 }

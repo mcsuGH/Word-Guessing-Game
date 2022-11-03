@@ -31,9 +31,9 @@ public class App {
 
     public static void setupGame(ArrayList<Game> games, Integer numberOfPlayers, WordChoser choser, Masker masker, Scanner userInput) {
         for (int i = 0; i < numberOfPlayers; i++) {
-            games.add(new Game(choser, masker));
             System.out.printf("Enter name for Player %d: ", i + 1);
-            games.get(i).setName(userInput.nextLine());
+            String playerName = userInput.nextLine();
+            games.add(new Game(choser, masker, playerName));
         }
 
         System.out.println("Welcome! Today the word to guess is:");
