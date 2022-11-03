@@ -14,30 +14,10 @@ public class App {
         Random rand = new Random();
         Scanner userInput = new Scanner(System.in);
 
-        multiPlayer(choser, encryptor, userInput, rand, 3);
-    }
-
-    public static void singlePlayer(WordChoser choser, Masker masker, Scanner userInput) {
-        Game game = new Game(choser, masker);
-
-        System.out.println("Welcome! Today the word to guess is:");
-        do {
-            System.out.println(game.getWordToGuess());
-            System.out.printf("Enter one letter to guess (%d attempts remaining):", game.getRemainingAttempts());
-            Character guessedLetter = userInput.nextLine().charAt(0);
-            Boolean result = game.guessLetter(guessedLetter);
-            if (result) {
-                System.out.println("Right!");
-            } else {
-                System.out.println("Wrong...");
-            }
-        } while (!game.isGameLost() && !game.isGameWon());
-        if (game.isGameWon()) {
-            System.out.printf("You guessed it right! The word was %s.", game.getWordToGuess());
-        }
-        if (game.isGameLost()) {
-            System.out.println("You have ran out of attempts!");
-        }
+        System.out.print("Please enter the number of players: ");
+        Integer numberOfPlayers = userInput.nextInt();
+        userInput.nextLine();                                               //Since it skips entering name for player without this line
+        multiPlayer(choser, encryptor, userInput, rand, numberOfPlayers);
     }
 
     public static void multiPlayer(WordChoser choser, Masker masker, Scanner userInput, Random rand, Integer numberOfPlayers) {
@@ -97,3 +77,26 @@ public class App {
     }
 }
 
+
+//    public static void singlePlayer(WordChoser choser, Masker masker, Scanner userInput) {
+//        Game game = new Game(choser, masker);
+//
+//        System.out.println("Welcome! Today the word to guess is:");
+//        do {
+//            System.out.println(game.getWordToGuess());
+//            System.out.printf("Enter one letter to guess (%d attempts remaining):", game.getRemainingAttempts());
+//            Character guessedLetter = userInput.nextLine().charAt(0);
+//            Boolean result = game.guessLetter(guessedLetter);
+//            if (result) {
+//                System.out.println("Right!");
+//            } else {
+//                System.out.println("Wrong...");
+//            }
+//        } while (!game.isGameLost() && !game.isGameWon());
+//        if (game.isGameWon()) {
+//            System.out.printf("You guessed it right! The word was %s.", game.getWordToGuess());
+//        }
+//        if (game.isGameLost()) {
+//            System.out.println("You have ran out of attempts!");
+//        }
+//    }
