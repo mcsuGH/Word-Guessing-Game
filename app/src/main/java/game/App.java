@@ -16,7 +16,7 @@ public class App {
 
         System.out.print("Please enter the number of players: ");
         Integer numberOfPlayers = userInput.nextInt();
-        userInput.nextLine();                                               //Since it skips entering name for player without this line
+        userInput.nextLine(); //Skips entering name for 1st player without this line
         multiPlayer(choser, encryptor, userInput, rand, numberOfPlayers);
     }
 
@@ -77,7 +77,7 @@ public class App {
         if (isGameOver(games)) {
             if (games.stream().anyMatch(game -> game.isGameWon())) {
                 Game winner = games.stream().filter(game -> game.isGameWon()).findAny().get();
-                System.out.printf("Congratulations %s! Your word was %s.", winner.getName(), winner.getWordToGuess());
+                System.out.printf("Congratulations %s! The word was %s.", winner.getName(), winner.getWordToGuess());
             } else {
                 System.out.println("Everybody has used up their attempts!");
             }
