@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
-        singlePlayer();
+        multiPlayer();
     }
 
     public static void singlePlayer() {
@@ -34,6 +34,18 @@ public class App {
         if (game.isGameLost()) {
             System.out.println("You have ran out of attempts!");
         }
+    }
+
+    public static void multiPlayer() {
+        WordChoser choser = new WordChoser();
+        Masker encryptor = new Masker();
+        Game player1 = new Game(choser, encryptor);
+        Game player2 = new Game(choser, encryptor);
+        Scanner userInput = new Scanner(System.in);
+
+        System.out.println("Welcome! Today the word to guess is:");
+        System.out.printf("Player 1: %s \n", player1.getWordToGuess());
+        System.out.printf("Player 2: %s \n", player2.getWordToGuess());
     }
 }
 
