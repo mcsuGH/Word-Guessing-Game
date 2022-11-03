@@ -42,9 +42,6 @@ public class App {
     public static void gameSetup(ArrayList<Game> games, Integer numberOfPlayers, WordChoser choser, Masker masker, Scanner userInput) {
         for (int i = 0; i < numberOfPlayers; i++) {
             games.add(new Game(choser, masker));
-        }
-
-        for (int i = 0; i < numberOfPlayers; i++) {
             System.out.printf("Enter name for Player %d: ", i + 1);
             games.get(i).setName(userInput.nextLine());
         }
