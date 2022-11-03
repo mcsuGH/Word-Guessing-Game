@@ -24,12 +24,12 @@ public class App {
         Integer initialTurn = rand.nextInt(numberOfPlayers);
         ArrayList<Game> games = new ArrayList<Game>();
 
-        setupGames(games, numberOfPlayers, choser, masker, userInput);
+        setupGame(games, numberOfPlayers, choser, masker, userInput);
         playGame(games, userInput, initialTurn, numberOfPlayers);
         endGame(games);
     }
 
-    public static void setupGames(ArrayList<Game> games, Integer numberOfPlayers, WordChoser choser, Masker masker, Scanner userInput) {
+    public static void setupGame(ArrayList<Game> games, Integer numberOfPlayers, WordChoser choser, Masker masker, Scanner userInput) {
         for (int i = 0; i < numberOfPlayers; i++) {
             games.add(new Game(choser, masker));
             System.out.printf("Enter name for Player %d: ", i + 1);
