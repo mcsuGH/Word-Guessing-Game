@@ -21,27 +21,12 @@ public class App {
     }
 
     public static void multiPlayer(WordChoser choser, Masker masker, Scanner userInput, Random rand, Integer numberOfPlayers) {
-        Integer turn = rand.nextInt(numberOfPlayers);
-        Integer playerTurn = turn % numberOfPlayers;
+        Integer initialTurn = rand.nextInt(numberOfPlayers);
         ArrayList<Game> games = new ArrayList<Game>();
 
         gameSetup(games, numberOfPlayers, choser, masker, userInput);
+        playGame(games, userInput, initialTurn, numberOfPlayers);
 
-        while (!isGameOver(games)) {
-            if (!games.get(playerTurn).isGameLost()) {
-                System.out.printf("\n%s: Enter one letter to guess: (%d attempts remaining): \n", games.get(playerTurn).getName(), games.get(playerTurn).getRemainingAttempts());
-                Character guessedLetter = userInput.nextLine().charAt(0);
-                Boolean result = games.get(playerTurn).guessLetter(guessedLetter);
-                if (result) {
-                    System.out.println("Right!");
-                } else {
-                    System.out.println("Wrong...");
-                }
-                System.out.printf("%s: %s \n", games.get(playerTurn).getName(), games.get(playerTurn).getWordToGuess());
-            }
-            turn += 1;
-            playerTurn = turn % numberOfPlayers;
-        }
         if (isGameOver(games)) {
             if (games.stream().anyMatch(game -> game.isGameWon())) {
                 System.out.printf("Congratulations %s! Your word was %s.",
@@ -78,5 +63,25 @@ public class App {
             return true;
         }
         return false;
+    }
+
+    public static void playGame(ArrayList<Game> games, Scanner userInput, Integer initialTurn, Integer numberOfPlayers) {
+        Integer turn = initialTurn;
+        Integer playerTurn = initialTurn % numberOfPlayers;
+        while (!isGameOver(games)) {
+            if (!games.get(playerTurn).isGameLost()) {
+                System.out.printf("\n%s: Enter one letter to guess: (%d attempts remaining): \n", games.get(playerTurn).getName(), games.get(playerTurn).getRemainingAttempts());
+                Character guessedLetter = userInput.nextLine().charAt(0);
+                Boolean result = games.get(playerTurn).guessLetter(guessedLetter);
+                if (result) {
+                    System.out.println("Right!");
+                } else {
+                    System.out.println("Wrong...");
+                }
+                System.out.printf("%s: %s \n", games.get(playerTurn).getName(), games.get(playerTurn).getWordToGuess());
+            }
+            turn += 1;
+            playerTurn = turn % numberOfPlayers;
+        }
     }
 }
