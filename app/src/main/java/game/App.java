@@ -5,17 +5,20 @@ package game;
 
 import java.util.Scanner;
 import java.util.Random;
+import java.util.ArrayList;
 
 public class App {
     public static void main(String[] args) {
-        multiPlayer();
-    }
-
-    public static void singlePlayer() {
         WordChoser choser = new WordChoser();
         Masker encryptor = new Masker();
-        Game game = new Game(choser, encryptor);
+        Random rand = new Random();
         Scanner userInput = new Scanner(System.in);
+
+        multiPlayer(choser, encryptor, userInput, rand, 2);
+    }
+
+    public static void singlePlayer(WordChoser choser, Masker masker, Scanner userInput) {
+        Game game = new Game(choser, masker);
 
         System.out.println("Welcome! Today the word to guess is:");
         do {
@@ -37,41 +40,41 @@ public class App {
         }
     }
 
-    public static void multiPlayer() {
-        WordChoser choser = new WordChoser();
-        Masker encryptor = new Masker();
-        Game player1 = new Game(choser, encryptor);
-        Game player2 = new Game(choser, encryptor);
-        Game[] game = {player1, player2};
-        Scanner userInput = new Scanner(System.in);
-        Random rand = new Random();
-        Integer turn = rand.nextInt(2);
-        Integer playerTurn = turn % 2;
+    public static void multiPlayer(WordChoser choser, Masker masker, Scanner userInput, Random rand, Integer numberOfPlayers) {
+        Integer turn = rand.nextInt(numberOfPlayers);
+        Integer playerTurn = turn % numberOfPlayers;
+        ArrayList<Game> game = new ArrayList<Game>();
 
-        System.out.println("Enter name for Player 1:");
-        player1.setName(userInput.nextLine());
-        System.out.println("Enter name for Player 2:");
-        player2.setName(userInput.nextLine());
+        for (int i = 0; i < numberOfPlayers; i++) {
+            game.add(new Game(choser, masker));
+        }
+
+        for (int i = 0; i < numberOfPlayers; i++) {
+            System.out.printf("Enter name for Player %d:", i + 1);
+            game.get(i).setName(userInput.nextLine());
+        }
+
         System.out.println("Welcome! Today the word to guess is:");
-        System.out.printf("%s: %s \n", player1.getName(), player1.getWordToGuess());
-        System.out.printf("%s: %s \n", player2.getName(), player2.getWordToGuess());
+        for (int i = 0; i < numberOfPlayers; i++) {
+            System.out.printf("%s: %s \n", game.get(i).getName(), game.get(i).getWordToGuess());
+        }
 
         while (!isGameOver(game)) {
-            System.out.printf("\n%s: Enter one letter to guess: (%d attempts remaining): \n", game[playerTurn].getName(), game[playerTurn].getRemainingAttempts());
+            System.out.printf("\n%s: Enter one letter to guess: (%d attempts remaining): \n", game.get(playerTurn).getName(), game.get(playerTurn).getRemainingAttempts());
             Character guessedLetter = userInput.nextLine().charAt(0);
-            Boolean result = game[playerTurn].guessLetter(guessedLetter);
+            Boolean result = game.get(playerTurn).guessLetter(guessedLetter);
             if (result) {
                 System.out.println("Right!");
             } else {
                 System.out.println("Wrong...");
             }
-            System.out.printf("%s: %s \n", game[playerTurn].getName(), game[playerTurn].getWordToGuess());
+            System.out.printf("%s: %s \n", game.get(playerTurn).getName(), game.get(playerTurn).getWordToGuess());
             turn += 1;
             playerTurn = turn % 2;
         }
     }
 
-    public static Boolean isGameOver(Game[] games) {
+    public static Boolean isGameOver(ArrayList<Game> games) {
         for (Game game : games) {
             if (game.isGameWon() || game.isGameLost()) {
                 return true;
