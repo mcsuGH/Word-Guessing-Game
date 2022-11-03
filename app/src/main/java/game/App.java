@@ -7,6 +7,10 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
+        singlePlayer();
+    }
+
+    public static void singlePlayer() {
         WordChoser choser = new WordChoser();
         Masker encryptor = new Masker();
         Game game = new Game(choser, encryptor);
@@ -23,31 +27,13 @@ public class App {
             } else {
                 System.out.println("Wrong...");
             }
-        } while (game.isGameLost() == false && game.isGameWon() == false);
-        if (game.isGameWon() == true) {
+        } while (!game.isGameLost() && !game.isGameWon());
+        if (game.isGameWon()) {
             System.out.printf("You guessed it right! The word was %s.", game.getWordToGuess());
         }
-        if (game.isGameLost() == true) {
-            System.out.printf("You have ran out of attempts!");
+        if (game.isGameLost()) {
+            System.out.println("You have ran out of attempts!");
         }
     }
 }
 
-//        Game game = new Game(choser);
-//        System.out.println("Welcome! Today the word to guess is:");
-//
-//        do {
-//            System.out.println(game.getWordToGuess());
-//
-//            System.out.println("Enter one letter to guess:");
-//
-//            Scanner scanner = new Scanner(System.in);
-//            Character guess = scanner.nextLine().charAt(0);
-//            Boolean result = game.guessLetter(guess);
-//
-//            if (result) {
-//                System.out.println("Right!");
-//            } else {
-//                System.out.println("Wrong...");
-//            }
-//        } while (game.getRemainingAttempts() >= 1);
