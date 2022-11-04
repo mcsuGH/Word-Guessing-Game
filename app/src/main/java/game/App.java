@@ -77,7 +77,7 @@ public class App {
         if (isGameOver(games)) {
             if (games.stream().anyMatch(game -> game.isGameWon())) {
                 Game winner = games.stream().filter(game -> game.isGameWon()).findAny().get();
-                System.out.printf("Congratulations %s! The word was %s.", winner.getName(), winner.getWordToGuess());
+                System.out.printf("Congratulations %s! The word was %s. \n", winner.getName(), winner.getWordToGuess());
             } else {
                 System.out.println("Everybody has used up their attempts!");
             }
