@@ -6,7 +6,7 @@ Word Guessing Game is a game where multiple players are each assigned a random w
 This program was built using Java and tested using JUnit.
 
 ## Instructions
-Use `git clone ` to clone this repository to your local machine, then open the project in an IDE such as VSCode. Run the file `App.java` and then play the game!
+Use `git clone https://github.com/mcsuGH/Word-Guessing-Game.git` to clone this repository to your local machine, then open the project in an IDE such as VSCode. Run the file `App.java` and then play the game!
 
 ## Features
 - Can enter the number of players before the game begins
