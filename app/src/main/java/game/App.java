@@ -19,7 +19,6 @@ public class App {
         userInput.nextLine(); //Skips entering name for 1st player without this line
         Integer initialTurn = rand.nextInt(numberOfPlayers);
         multiPlayer(choser, encryptor, userInput, initialTurn, numberOfPlayers);
-        userInput.close();
     }
 
     public static void multiPlayer(WordChoser choser, Masker masker, Scanner userInput, Integer initialTurn, Integer numberOfPlayers) {
