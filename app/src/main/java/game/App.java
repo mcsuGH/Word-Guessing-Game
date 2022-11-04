@@ -17,11 +17,11 @@ public class App {
         System.out.print("Please enter the number of players: ");
         Integer numberOfPlayers = userInput.nextInt();
         userInput.nextLine(); //Skips entering name for 1st player without this line
-        multiPlayer(choser, encryptor, userInput, rand, numberOfPlayers);
+        Integer initialTurn = rand.nextInt(numberOfPlayers);
+        multiPlayer(choser, encryptor, userInput, initialTurn, numberOfPlayers);
     }
 
-    public static void multiPlayer(WordChoser choser, Masker masker, Scanner userInput, Random rand, Integer numberOfPlayers) {
-        Integer initialTurn = rand.nextInt(numberOfPlayers);
+    public static void multiPlayer(WordChoser choser, Masker masker, Scanner userInput, Integer initialTurn, Integer numberOfPlayers) {
         ArrayList<Game> games = new ArrayList<Game>();
 
         setupGame(games, numberOfPlayers, choser, masker, userInput);
