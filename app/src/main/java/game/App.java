@@ -3,36 +3,46 @@
  */
 package game;
 
-import java.util.Scanner;
 import java.util.Random;
 import java.util.ArrayList;
+import java.io.*;
 
 public class App {
-    public static void main(String[] args) {
-        WordChoser choser = new WordChoser();
-        Masker encryptor = new Masker();
-        Random rand = new Random();
-        Scanner userInput = new Scanner(System.in);
+    private final BufferedReader input;
+    private final PrintStream output;
+    private final ArrayList<Game> games;
+    private final WordChoser choser;
+    private final Masker masker;
 
-        System.out.print("Please enter the number of players: ");
-        Integer numberOfPlayers = userInput.nextInt();
-        userInput.nextLine(); //Skips entering name for 1st player without this line
-        Integer initialTurn = rand.nextInt(numberOfPlayers);
-        multiPlayer(choser, encryptor, userInput, initialTurn, numberOfPlayers);
+    public App(InputStream input, PrintStream output, WordChoser choser, Masker masker) {
+        this.input = new BufferedReader(new InputStreamReader(input));
+        this.output = output;
+        this.games = new ArrayList<Game>();
+        this.choser = choser;
+        this.masker = masker;
     }
 
-    public static void multiPlayer(WordChoser choser, Masker masker, Scanner userInput, Integer initialTurn, Integer numberOfPlayers) {
-        ArrayList<Game> games = new ArrayList<Game>();
+    public static void main(String[] args) throws IOException {
+        Random rand = new Random();
+        App app = new App(System.in, System.out, new WordChoser(), new Masker());
 
-        setupGame(games, numberOfPlayers, choser, masker, userInput);
-        playGame(games, userInput, initialTurn, numberOfPlayers);
+        System.out.print("Please enter the number of players: ");
+        Integer numberOfPlayers = Integer.parseInt(app.input.readLine());
+        Integer initialTurn = rand.nextInt(numberOfPlayers);
+
+        app.multiPlayer(initialTurn, numberOfPlayers);
+    }
+
+    public void multiPlayer(Integer initialTurn, Integer numberOfPlayers) throws IOException {
+        setupGame(games, numberOfPlayers);
+        playGame(games, initialTurn, numberOfPlayers);
         endGame(games);
     }
 
-    public static void setupGame(ArrayList<Game> games, Integer numberOfPlayers, WordChoser choser, Masker masker, Scanner userInput) {
+    public void setupGame(ArrayList<Game> games, Integer numberOfPlayers) throws IOException {
         for (int i = 0; i < numberOfPlayers; i++) {
             System.out.printf("Enter name for Player %d: ", i + 1);
-            String playerName = userInput.nextLine();
+            String playerName = input.readLine();
             games.add(new Game(choser, masker, playerName));
         }
 
@@ -42,7 +52,7 @@ public class App {
         };
     }
 
-    public static Boolean isGameOver(ArrayList<Game> games) {
+    public Boolean isGameOver(ArrayList<Game> games) {
         if (games.stream().anyMatch(game -> game.isGameWon())) {
             return true;
         }
@@ -52,7 +62,7 @@ public class App {
         return false;
     }
 
-    public static void playGame(ArrayList<Game> games, Scanner userInput, Integer initialTurn, Integer numberOfPlayers) {
+    public void playGame(ArrayList<Game> games, Integer initialTurn, Integer numberOfPlayers) throws IOException {
         Integer turn = initialTurn;
 
         while (!isGameOver(games)) {
@@ -60,7 +70,7 @@ public class App {
             Game currentPlayer = games.get(playerTurn);
             if (!currentPlayer.isGameLost()) {
                 System.out.printf("\n%s: Enter one letter to guess: (%d attempts remaining): \n", currentPlayer.getName(), currentPlayer.getRemainingAttempts());
-                Character guessedLetter = userInput.nextLine().charAt(0);
+                Character guessedLetter = input.readLine().charAt(0);
                 Boolean result = currentPlayer.guessLetter(guessedLetter);
                 if (result) {
                     System.out.println("Right!");
@@ -73,7 +83,7 @@ public class App {
         }
     }
 
-    public static void endGame(ArrayList<Game> games) {
+    public void endGame(ArrayList<Game> games) {
         if (isGameOver(games)) {
             if (games.stream().anyMatch(game -> game.isGameWon())) {
                 Game winner = games.stream().filter(game -> game.isGameWon()).findAny().get();
