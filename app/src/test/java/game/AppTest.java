@@ -9,66 +9,77 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.*;
-import java.util.ArrayList;
 
 public class AppTest {
     private static final WordChoser mockChoser = mock(WordChoser.class);
+    private final InputStream systemIn = System.in;
+    private final PrintStream systemOut = System.out;
+    private ByteArrayInputStream testIn;
+    private ByteArrayOutputStream testOut;
 
     @Before public void setupTests() {
         when(mockChoser.getRandomWordFromDictionary()).thenReturn("MAKERS");
+        testOut = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(testOut));
+    }
+
+    private void provideInput(String data) {
+        testIn = new ByteArrayInputStream(data.getBytes());
+        System.setIn(testIn);
+    }
+
+    private String getOutput() {
+        return testOut.toString();
+    }
+
+    @After
+    public void restoreSystemInputOutput() {
+        System.setIn(systemIn);
+        System.setOut(systemOut);
     }
 
     @Test public void testApp() throws IOException {
-        String[] appOutput = runApp("Maker\nA\nK\nE\nR\nS");
+        final String testString = "Maker" + System.getProperty("line.separator")
+                + "A" + System.getProperty("line.separator")
+                + "K" + System.getProperty("line.separator")
+                + "E" + System.getProperty("line.separator")
+                + "R" + System.getProperty("line.separator")
+                + "S" + System.getProperty("line.separator");
+        provideInput(testString);
 
-        assertEquals("Enter name for Player 1: ", appOutput[0]);
-        assertEquals("Welcome! Today the word to guess is:", appOutput[1]);
-        assertEquals("Maker: M_____ \n", appOutput[2]);
+        App app= new App(testIn, mockChoser, new Masker());
+        app.multiPlayer(0,1);
 
-        assertEquals("\nMaker: Enter one letter to guess: (10 attempts remaining): \n", appOutput[3]);
-        assertEquals("Right!): \n", appOutput[4]);
-        assertEquals("Maker: MA____): \n", appOutput[5]);
+        String[] appOutput = getOutput().toString().split("\\r?\\n");
 
-        assertEquals("\nMaker: Enter one letter to guess: (10 attempts remaining): \n", appOutput[6]);
-        assertEquals("Right!): \n", appOutput[7]);
-        assertEquals("Maker: MAK___): \n", appOutput[8]);
+        assertEquals("Enter name for Player 1: Welcome! Today the word to guess is:", appOutput[0]);
+        assertEquals("Maker: M_____ ", appOutput[1]);
 
-        assertEquals("\nMaker: Enter one letter to guess: (10 attempts remaining): \n", appOutput[9]);
-        assertEquals("Right!): \n", appOutput[10]);
-        assertEquals("Maker: MAKE__): \n", appOutput[11]);
+        assertEquals("", appOutput[2]);
+        assertEquals("Maker: Enter one letter to guess: (10 attempts remaining): ", appOutput[3]);
+        assertEquals("Right!", appOutput[4]);
+        assertEquals("Maker: MA____ ", appOutput[5]);
 
-        assertEquals("\nMaker: Enter one letter to guess: (10 attempts remaining): \n", appOutput[12]);
-        assertEquals("Right!): \n", appOutput[13]);
-        assertEquals("Maker: MAKER_): \n", appOutput[14]);
+        assertEquals("", appOutput[6]);
+        assertEquals("Maker: Enter one letter to guess: (10 attempts remaining): ", appOutput[7]);
+        assertEquals("Right!", appOutput[8]);
+        assertEquals("Maker: MAK___ ", appOutput[9]);
 
-        assertEquals("\nMaker: Enter one letter to guess: (10 attempts remaining): \n", appOutput[15]);
-        assertEquals("Right!): \n", appOutput[16]);
-        assertEquals("Maker: MAKERS): \n", appOutput[17]);
+        assertEquals("", appOutput[10]);
+        assertEquals("Maker: Enter one letter to guess: (10 attempts remaining): ", appOutput[11]);
+        assertEquals("Right!", appOutput[12]);
+        assertEquals("Maker: MAKE__ ", appOutput[13]);
 
-        assertEquals("Congratulations Maker! The word was MAKERS.", appOutput[18]);
+        assertEquals("", appOutput[14]);
+        assertEquals("Maker: Enter one letter to guess: (10 attempts remaining): ", appOutput[15]);
+        assertEquals("Right!", appOutput[16]);
+        assertEquals("Maker: MAKER_ ", appOutput[17]);
+
+        assertEquals("", appOutput[18]);
+        assertEquals("Maker: Enter one letter to guess: (10 attempts remaining): ", appOutput[19]);
+        assertEquals("Right!", appOutput[20]);
+        assertEquals("Maker: MAKERS ", appOutput[21]);
+
+        assertEquals("Congratulations Maker! The word was MAKERS. ", appOutput[22]);
     }
-
-    private String[] runApp(String userInput) throws IOException {
-        // instead of System.in (what a user types into the console)
-        InputStream input = new ByteArrayInputStream(userInput.getBytes());
-
-        // instead of System.out (what the console returns)
-        ArrayList<Character> captured = new ArrayList<>();
-        OutputStream output = new OutputStream() {
-            @Override
-            public void write(int inByteValue) throws IOException {
-                captured.add((char) inByteValue);
-            }
-        };
-
-        App app = new App(input, new PrintStream(output), mockChoser, new Masker());
-        app.multiPlayer(0, 1);
-
-        // modify captured to something that is testable
-        String appOutput = captured.stream()
-                .map(Object::toString)
-                .reduce("", (acc, e) -> acc  + e);
-        return appOutput.split("\\r?\\n");
-    }
-
 }

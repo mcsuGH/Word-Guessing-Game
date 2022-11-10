@@ -9,14 +9,12 @@ import java.io.*;
 
 public class App {
     private final BufferedReader input;
-    private final PrintStream output;
     private final ArrayList<Game> games;
     private final WordChoser choser;
     private final Masker masker;
 
-    public App(InputStream input, PrintStream output, WordChoser choser, Masker masker) {
+    public App(InputStream input, WordChoser choser, Masker masker) {
         this.input = new BufferedReader(new InputStreamReader(input));
-        this.output = output;
         this.games = new ArrayList<Game>();
         this.choser = choser;
         this.masker = masker;
@@ -24,7 +22,7 @@ public class App {
 
     public static void main(String[] args) throws IOException {
         Random rand = new Random();
-        App app = new App(System.in, System.out, new WordChoser(), new Masker());
+        App app = new App(System.in, new WordChoser(), new Masker());
 
         System.out.print("Please enter the number of players: ");
         Integer numberOfPlayers = Integer.parseInt(app.input.readLine());
