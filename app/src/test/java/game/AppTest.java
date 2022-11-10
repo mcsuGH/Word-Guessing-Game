@@ -38,7 +38,7 @@ public class AppTest {
         System.setOut(systemOut);
     }
 
-    @Test public void testApp() throws IOException {
+    @Test public void testApp_ForSuccessfulOnePlayer() throws IOException {
         final String testString = "Maker" + System.getProperty("line.separator")
                 + "A" + System.getProperty("line.separator")
                 + "K" + System.getProperty("line.separator")
@@ -81,5 +81,163 @@ public class AppTest {
         assertEquals("Maker: MAKERS ", appOutput[21]);
 
         assertEquals("Congratulations Maker! The word was MAKERS. ", appOutput[22]);
+    }
+
+    @Test public void testApp_ForUnsuccessfulOnePlayer() throws IOException {
+        final String testString = "Maker" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator");
+        provideInput(testString);
+
+        App app= new App(testIn, mockChoser, new Masker());
+        app.multiPlayer(0,1);
+
+        String[] appOutput = getOutput().toString().split("\\r?\\n");
+
+        assertEquals("Enter name for Player 1: Welcome! Today the word to guess is:", appOutput[0]);
+        assertEquals("Maker: M_____ ", appOutput[1]);
+
+        assertEquals("", appOutput[2]);
+        assertEquals("Maker: Enter one letter to guess: (10 attempts remaining): ", appOutput[3]);
+        assertEquals("Wrong...", appOutput[4]);
+        assertEquals("Maker: M_____ ", appOutput[5]);
+
+        assertEquals("", appOutput[6]);
+        assertEquals("Maker: Enter one letter to guess: (9 attempts remaining): ", appOutput[7]);
+        assertEquals("Wrong...", appOutput[8]);
+        assertEquals("Maker: M_____ ", appOutput[9]);
+
+
+        assertEquals("", appOutput[38]);
+        assertEquals("Maker: Enter one letter to guess: (1 attempts remaining): ", appOutput[39]);
+        assertEquals("Wrong...", appOutput[40]);
+        assertEquals("Maker: M_____ ", appOutput[41]);
+
+        assertEquals("Everybody has used up their attempts!", appOutput[42]);
+    }
+
+    @Test public void testApp_ForThreePlayers_TwoWhoLoseEarly() throws IOException {
+        final String testString = "Player 1" + System.getProperty("line.separator")
+                + "Player 2" + System.getProperty("line.separator")
+                + "Player 3" + System.getProperty("line.separator")
+                + "A" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "K" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "E" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "R" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "Z" + System.getProperty("line.separator")
+                + "S" + System.getProperty("line.separator");
+        provideInput(testString);
+
+        App app= new App(testIn, mockChoser, new Masker());
+        app.multiPlayer(0,3);
+
+        String[] appOutput = getOutput().toString().split("\\r?\\n");
+
+        assertEquals("Enter name for Player 1: Enter name for Player 2: Enter name for Player 3: Welcome! Today the word to guess is:", appOutput[0]);
+        assertEquals("Player 1: M_____ ", appOutput[1]);
+        assertEquals("Player 2: M_____ ", appOutput[2]);
+        assertEquals("Player 3: M_____ ", appOutput[3]);
+
+        assertEquals("", appOutput[4]);
+        assertEquals("Player 1: Enter one letter to guess: (10 attempts remaining): ", appOutput[5]);
+        assertEquals("Right!", appOutput[6]);
+        assertEquals("Player 1: MA____ ", appOutput[7]);
+        assertEquals("", appOutput[8]);
+        assertEquals("Player 2: Enter one letter to guess: (10 attempts remaining): ", appOutput[9]);
+        assertEquals("Wrong...", appOutput[10]);
+        assertEquals("Player 2: M_____ ", appOutput[11]);
+        assertEquals("", appOutput[12]);
+        assertEquals("Player 3: Enter one letter to guess: (10 attempts remaining): ", appOutput[13]);
+        assertEquals("Wrong...", appOutput[14]);
+        assertEquals("Player 3: M_____ ", appOutput[15]);
+
+        assertEquals("", appOutput[16]);
+        assertEquals("Player 1: Enter one letter to guess: (10 attempts remaining): ", appOutput[17]);
+        assertEquals("Right!", appOutput[18]);
+        assertEquals("Player 1: MAK___ ", appOutput[19]);
+        assertEquals("", appOutput[20]);
+        assertEquals("Player 2: Enter one letter to guess: (9 attempts remaining): ", appOutput[21]);
+        assertEquals("Wrong...", appOutput[22]);
+        assertEquals("Player 2: M_____ ", appOutput[23]);
+        assertEquals("", appOutput[24]);
+        assertEquals("Player 3: Enter one letter to guess: (9 attempts remaining): ", appOutput[25]);
+        assertEquals("Wrong...", appOutput[26]);
+        assertEquals("Player 3: M_____ ", appOutput[27]);
+
+        assertEquals("", appOutput[28]);
+        assertEquals("Player 1: Enter one letter to guess: (10 attempts remaining): ", appOutput[29]);
+        assertEquals("Right!", appOutput[30]);
+        assertEquals("Player 1: MAKE__ ", appOutput[31]);
+        assertEquals("", appOutput[32]);
+        assertEquals("Player 2: Enter one letter to guess: (8 attempts remaining): ", appOutput[33]);
+        assertEquals("Wrong...", appOutput[34]);
+        assertEquals("Player 2: M_____ ", appOutput[35]);
+        assertEquals("", appOutput[36]);
+        assertEquals("Player 3: Enter one letter to guess: (8 attempts remaining): ", appOutput[37]);
+        assertEquals("Wrong...", appOutput[38]);
+        assertEquals("Player 3: M_____ ", appOutput[39]);
+
+        assertEquals("", appOutput[112]);
+        assertEquals("Player 1: Enter one letter to guess: (5 attempts remaining): ", appOutput[113]);
+        assertEquals("Wrong...", appOutput[114]);
+        assertEquals("Player 1: MAKER_ ", appOutput[115]);
+        assertEquals("", appOutput[116]);
+        assertEquals("Player 2: Enter one letter to guess: (1 attempts remaining): ", appOutput[117]);
+        assertEquals("Wrong...", appOutput[118]);
+        assertEquals("Player 2: M_____ ", appOutput[119]);
+        assertEquals("", appOutput[120]);
+        assertEquals("Player 3: Enter one letter to guess: (1 attempts remaining): ", appOutput[121]);
+        assertEquals("Wrong...", appOutput[122]);
+        assertEquals("Player 3: M_____ ", appOutput[123]);
+
+        assertEquals("", appOutput[124]);
+        assertEquals("Player 1: Enter one letter to guess: (4 attempts remaining): ", appOutput[125]);
+        assertEquals("Wrong...", appOutput[126]);
+        assertEquals("Player 1: MAKER_ ", appOutput[127]);
+        assertEquals("", appOutput[128]);
+        assertEquals("Player 1: Enter one letter to guess: (3 attempts remaining): ", appOutput[129]);
+        assertEquals("Wrong...", appOutput[130]);
+        assertEquals("Player 1: MAKER_ ", appOutput[131]);
+        assertEquals("", appOutput[132]);
+        assertEquals("Player 1: Enter one letter to guess: (2 attempts remaining): ", appOutput[133]);
+        assertEquals("Right!", appOutput[134]);
+        assertEquals("Player 1: MAKERS ", appOutput[135]);
+
+        assertEquals("Congratulations Player 1! The word was MAKERS. ", appOutput[136]);
     }
 }
